@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <h1>Markdon Online</h1>
-    <textarea class="textarea" v-model="textareaStr"></textarea>
+    <h3>INPUT</h3>
+    <textarea class="textarea" v-model.trim="textareaStr"></textarea>
     <button class="button" @click="renderMd">生成Markdown</button>
-    <div v-html="text"></div>
+    <h3>OUTPUT</h3>
+    <div class="output" v-html="text"></div>
   </div>
 </template>
 
@@ -20,6 +22,11 @@ export default {
   },
   methods: {
     renderMd () {
+      // 判空
+      if (this.textareaStr === '') {
+        return
+      }
+      // 转换
       axios({
         method: 'post',
         url: 'https://api.github.com/markdown',
@@ -79,5 +86,12 @@ html{
 .button:hover{
   background-color: #da5757;
   box-shadow: 0 0 0 0.3rem rgba(220,53,69,.5);
+}
+
+.output{
+  background-color: aliceblue;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 0px 10px;
 }
 </style>
